@@ -41,6 +41,11 @@
         </header>
                     <div class="container py-5">
     <!-- For demo purpose -->
+               {% for message in app.flashes('error') %}
+                            <div class="alert alert-danger">
+                                {{ message }}
+                            </div>
+            {% endfor %}
     <div class="row mb-4">
         <div class="col-lg-8 mx-auto text-center">
             <h1 class="display-6">Payement Hub</h1>
@@ -84,6 +89,11 @@
                     </div>
                     <div id="net-banking" class="tab-pane fade pt-3">
                         <div class="form-group "> 
+                        {% for message in app.flashes('error') %}
+                            <div class="flash-error">
+                                {{ message }}
+                            </div>
+                        {% endfor %}
                         {{ form_errors(RetraitDepotFormType) }}
                         {{ form_start(RetraitDepotFormType) }}
                             <h6 class='mt-2'>Type de l'opération</h6>

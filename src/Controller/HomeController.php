@@ -7,6 +7,8 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Notifier\Notification\Notification;
+use Symfony\Component\Notifier\NotifierInterface;
 
 use App\Entity\Account;
 use App\Form\AccountType;
@@ -32,30 +34,36 @@ class HomeController extends AbstractController
     public function feed(EntityManagerInterface $entityManager): Response
     {
         $client = $this->getUser();
+        $transaction = null;
+        $transaction2 = null;
         $existingAccounts = $entityManager->getRepository(Account::class)->findBy(['client' => $client]);
-
-        $emeteurAccount = $existingAccounts[1]->getId();
-        //$transaction = $entityManager->getRepository(Transaction::class)->findBy(['emeteurAccount' => $emeteurAccount]);
 
         $hasCurrentAccount = false;
         $hasSavingsAccount = false;
 
         foreach ($existingAccounts as $account) {
             if ($account->getType() === 'Compte Courant') {
+                $emeteurAccount = $account->getId();
+                $transaction = $entityManager->getRepository(Transaction::class)->findBy(['emeteurAccount' => $emeteurAccount]);
                 $hasCurrentAccount = true;
             } elseif ($account->getType() === 'Compte Epargne Action') {
                 $hasSavingsAccount = true;
+                $beneficiaryAccount = $account->getId();
+                $transaction2 = $entityManager->getRepository(Transaction::class)->findBy(['beneficiaryAccount' => $beneficiaryAccount]);
             }
         }
 
-        return $this->render('home/feed.html.twig', [
-            'client' => $client,
-            'hasCurrentAccount' => $hasCurrentAccount,
-            'hasSavingsAccount' => $hasSavingsAccount,
-            'accounts' => $existingAccounts,
-            //'transaction' => $transaction,
-        ]);
-    }
+
+            return $this->render('home/feed.html.twig', [
+                'client' => $client,
+                'hasCurrentAccount' => $hasCurrentAccount,
+                'hasSavingsAccount' => $hasSavingsAccount,
+                'accounts' => $existingAccounts,
+                'transaction' => $transaction,
+                'transaction2' => $transaction2,
+            ]);
+
+        }
 
     #[Route('/create-current-account', name: 'create_current_account')]
     public function createCurrentAccount(EntityManagerInterface $entityManager): Response
@@ -125,24 +133,35 @@ class HomeController extends AbstractController
             $accountRepository = $entityManager->getRepository(Account::class);
             $beneficiaire = $accountRepository->findOneBy(['id' => $data['beneficiaryaccount']]);
             
-            $beneficiaire->setBalance($beneficiaire->getBalance() + $data['amount']);
-            $currentAccount->setBalance($currentAccount->getBalance() - $data['amount']);
+            if($currentAccount->getBalance()< $data['amount'] && $currentAccount->getOverdraft() < $data['amount'] ){
+                $this->addFlash('error', "Votre solde est Insuffisant");
+
+            }
+            else {
+                if($currentAccount != $beneficiaire) {
+                    $beneficiaire->setBalance($beneficiaire->getBalance() + $data['amount']);
+                    $currentAccount->setBalance($currentAccount->getBalance() - $data['amount']);
 
 
-            $virement = new Transaction();
+                    $virement = new Transaction();
             
-            $virement->setAmount($data['amount']);
-            $virement->setType('Virement');
-            $virement->setDescription($data['description']);
-            $virement->setBeneficiaryaccount($beneficiaire);
-            $virement->setEmeteurAccount($currentAccount);
+                    $virement->setAmount($data['amount']);
+                    $virement->setType('Virement');
+                    $virement->setDescription($data['description']);
+                    $virement->setBeneficiaryaccount($beneficiaire);
+                    $virement->setEmeteurAccount($currentAccount);
 
             
-            $entityManager->persist($beneficiaire);
-            $entityManager->persist($currentAccount);
-            $entityManager->persist($virement);
-            $entityManager->flush();
-            // $this->addFlash('success','Votre virement a bien été effectué.');
+                    $entityManager->persist($beneficiaire);
+                    $entityManager->persist($currentAccount);
+                    $entityManager->persist($virement);
+                    $entityManager->flush();
+                    // $this->addFlash('success','Votre virement a bien été effectué.');
+                }
+                else {
+                    $this->addFlash('error' , "Veuillez entrer un compte beneficiaire différent du compte emetteur");
+                }
+            }
 
         }
 
@@ -173,18 +192,24 @@ class HomeController extends AbstractController
             if($data['type'] === "retrait"){
                 $accountRepository = $entityManager->getRepository(Account::class);
                 //effectue l'opération
-                $currentAccount->setBalance($currentAccount->getBalance() - $data['amount']);
 
-                //crée l'objet Transaction
-                $retrait = new Transaction();
-                $retrait->setType('Retrait');
-                $retrait->setAmount($data['amount']);
-                $retrait->setEmeteurAccount($currentAccount);
+                if($currentAccount->getBalance()< $data['amount'] && $currentAccount->getOverdraft() < $data['amount']){
+                    $this->addFlash('error', "Votre solde est Insuffisant");
+                }
+                else {
+                    $currentAccount->setBalance($currentAccount->getBalance() - $data['amount']);
+
+                    //crée l'objet Transaction
+                    $retrait = new Transaction();
+                    $retrait->setType('Retrait');
+                    $retrait->setAmount($data['amount']);
+                    $retrait->setEmeteurAccount($currentAccount);
             
-                //preparation des envois vers les bdd
-                $entityManager->persist($currentAccount);
-                $entityManager->persist($retrait);
-                $entityManager->flush();
+                    //preparation des envois vers les bdd
+                    $entityManager->persist($currentAccount);
+                    $entityManager->persist($retrait);
+                    $entityManager->flush();
+                }
             }
 
         }
@@ -196,23 +221,29 @@ class HomeController extends AbstractController
             $data = $form3->getData();
             //recupere le compte passé dans le formulaire
             $accountRepository = $entityManager->getRepository(Account::class);
-            //effectue l'opération
-            $currentAccount->setBalance($currentAccount->getBalance() - $data['amount']);
 
-            //crée l'objet Transaction
-            $buyonline = new Transaction();
-            $buyonline->setType('Achat en ligne');
-            $buyonline->setAmount($data['amount']);
-            $buyonline->setDescription('Paiment en ligne Amazone');
-            $buyonline->setEmeteurAccount($currentAccount);
-            
+            if($currentAccount->getBalance()< $data['amount'] && $currentAccount->getOverdraft() < $data['amount']){
+                $this->addFlash('error', "Votre solde est Insuffisant");
+            }
+            else {
 
+                //effectue l'opération
+                $currentAccount->setBalance($currentAccount->getBalance() - $data['amount']);
 
-            //preparation des envois vers les bdd
-            $entityManager->persist($currentAccount);
-            $entityManager->persist($buyonline);
-            $entityManager->flush();
-
+                //crée l'objet Transaction
+                $buyonline = new Transaction();
+                $buyonline->setType('Achat en ligne');
+                $buyonline->setAmount($data['amount']);
+                $buyonline->setDescription('Paiment en ligne Amazone');
+                $buyonline->setEmeteurAccount($currentAccount);
+                            
+                
+                
+                //preparation des envois vers les bdd
+                $entityManager->persist($currentAccount);
+                $entityManager->persist($buyonline);
+                $entityManager->flush();
+            }
 
         }
 

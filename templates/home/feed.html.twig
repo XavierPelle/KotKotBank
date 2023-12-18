@@ -83,6 +83,7 @@
 </section>
 
 <section class="container">
+{% if transaction is defined %}
  {% for transactions in transaction %}
 <div class="">
     <div class="col-sm">
@@ -107,6 +108,35 @@
       </div>
     </div>
         {% endfor %}
+{% endif %}
+</section>
+<section class="container">
+{% if transaction2 is defined %}
+ {% for transactions2 in transaction2 %}
+<div class="">
+    <div class="col-sm">
+      <div class="card">
+        <div class="card-content">
+          <div class="card-body cleartfix">
+            <div class="media align-items-stretch">
+              <div class="align-self-center">
+                <h1 class="mr-2">${{ transactions2.amount }}</h1>
+              </div>
+              <div class="media-body">
+                <h4>{{ transactions2.type }}</h4>
+                <span>{{ transactions2.description }}</span>
+                <span>{{ transactions2.date|date("m/d/Y") }}</span>
+              </div>
+              <div class="align-self-center">
+                <i class="icon-wallet success font-large-2"></i>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+        {% endfor %}
+{% endif %}
 </section>
 </section>
 </body>

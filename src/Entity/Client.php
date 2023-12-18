@@ -41,6 +41,9 @@ class Client implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(length: 255)]
     private ?string $password = null;
 
+    #[ORM\Column(length: 50)]
+    private ?string $investorProfil = null;
+
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     private ?\DateTimeInterface $registrationDate = null;
 
@@ -50,12 +53,19 @@ class Client implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(mappedBy: 'client', targetEntity: Account::class)]
     private Collection $accounts;
 
+    #[ORM\OneToOne(mappedBy: 'client', cascade: ['persist', 'remove'])]
+    private ?Portefolio $portefolio = null;
+
+    #[ORM\OneToOne(mappedBy: 'client', cascade: ['persist', 'remove'])]
+    private ?ShareTransaction $shareTransaction = null;
+
     public function __construct()
     {
         $this->actionSavingsAccounts = new ArrayCollection();
         $this->registrationDate = new \dateTime();
         $this->roles = ["ROLE_USER"];
         $this->accounts = new ArrayCollection();
+        $this->investorProfil = "CLASSIC_PROFIL";
     }
 
     public function getId(): ?int
@@ -150,6 +160,18 @@ class Client implements UserInterface, PasswordAuthenticatedUserInterface
         // $this->plainPassword = null;
     }
 
+    public function getInvestorProfil(): ?string
+    {
+        return $this->investorProfil;
+    }
+
+    public function setInvestorProfil(string $investorProfil): static
+    {
+        $this->investorProfil = $investorProfil;
+
+        return $this;
+    }
+
     public function getRegistrationDate(): ?\DateTimeInterface
     {
         return $this->registrationDate;
@@ -200,6 +222,50 @@ class Client implements UserInterface, PasswordAuthenticatedUserInterface
                 $account->setClient(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getPortefolio(): ?Portefolio
+    {
+        return $this->portefolio;
+    }
+
+    public function setPortefolio(?Portefolio $portefolio): static
+    {
+        // unset the owning side of the relation if necessary
+        if ($portefolio === null && $this->portefolio !== null) {
+            $this->portefolio->setClient(null);
+        }
+
+        // set the owning side of the relation if necessary
+        if ($portefolio !== null && $portefolio->getClient() !== $this) {
+            $portefolio->setClient($this);
+        }
+
+        $this->portefolio = $portefolio;
+
+        return $this;
+    }
+
+    public function getShareTransaction(): ?ShareTransaction
+    {
+        return $this->shareTransaction;
+    }
+
+    public function setShareTransaction(?ShareTransaction $shareTransaction): static
+    {
+        // unset the owning side of the relation if necessary
+        if ($shareTransaction === null && $this->shareTransaction !== null) {
+            $this->shareTransaction->setClient(null);
+        }
+
+        // set the owning side of the relation if necessary
+        if ($shareTransaction !== null && $shareTransaction->getClient() !== $this) {
+            $shareTransaction->setClient($this);
+        }
+
+        $this->shareTransaction = $shareTransaction;
 
         return $this;
     }
