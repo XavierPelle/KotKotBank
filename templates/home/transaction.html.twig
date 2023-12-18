@@ -1,0 +1,114 @@
+<!doctype html>
+    <html>
+        <head>
+            <meta charset='utf-8'>
+            <meta name='viewport' content='width=device-width, initial-scale=1'>
+            <title>Snippet - BBBootstrap</title>
+            <link href='https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css' rel='stylesheet'>
+            <link href='https://use.fontawesome.com/releases/v5.8.1/css/all.css' rel='stylesheet'>
+            <script type='text/javascript' src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js'></script>
+            <style>::-webkit-scrollbar {
+                     width: 8px;
+                     }
+                    /* Track */
+                    ::-webkit-scrollbar-track {
+                     background: #f1f1f1;
+                    }
+                                 
+                    /* Handle */
+                    ::-webkit-scrollbar-thumb {
+                     background: #888;
+                    }
+                               
+                    /* Handle on hover */
+                    ::-webkit-scrollbar-thumb:hover {
+                      background: #555;
+                    } body{background: #f5f5f5}.rounded{border-radius: 1rem}.nav-pills .nav-link{color: #555}.nav-pills .nav-link.active{color: white}input[type="radio"]{margin-right: 5px}.bold{font-weight:bold}</style>
+                    </head>
+                    <body className='snippet-body'>
+                    <header>
+            <nav class="navbar navbar-expand-lg navbar-light mb-4">
+            <a class="navbar-brand" href="{{ path('app_feed') }}">KoKoTBank.</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav mr-auto">
+                </ul>
+            </div>
+            <a href="{{path('logout')}}" >Se Déconnecter</a>
+            </nav>
+        </header>
+                    <div class="container py-5">
+    <!-- For demo purpose -->
+    <div class="row mb-4">
+        <div class="col-lg-8 mx-auto text-center">
+            <h1 class="display-6">Payement Hub</h1>
+        </div>
+    </div> <!-- End -->
+    <div class="row">
+        <div class="col-lg-6 mx-auto">
+            <div class="card ">
+                <div class="card-header">
+                    <div class="bg-white shadow-sm pt-4 pl-2 pr-2 pb-2">
+                        <!-- Credit card form tabs -->
+                        <ul role="tablist" class="nav bg-light nav-pills rounded nav-fill mb-3">
+                            <li class="nav-item"> <a data-toggle="pill" href="#credit-card" class="nav-link active "> <i class="fas fa-credit-card mr-2"></i> Virement </a> </li>
+                            <li class="nav-item"> <a data-toggle="pill" href="#paypal" class="nav-link "> <i class="fab fa-paypal mr-2"></i> Achat en ligne</a> </li>
+                            <li class="nav-item"> <a data-toggle="pill" href="#net-banking" class="nav-link "> <i class="fas fa-mobile-alt mr-2"></i> Retrait / Dépôt </a> </li>
+                        </ul>
+                    </div> <!-- End -->
+                    <!-- Credit card form content -->
+                    <div class="tab-content">
+                        <!-- credit card info-->
+                        <div id="credit-card" class="tab-pane fade show active pt-3">
+                                {{ form_errors(VirementFormType) }}
+                                {{ form_start(VirementFormType) }}
+                                    <h6>Choissir le compte receveur</h6>
+                                        {{ form_row(VirementFormType.beneficiaryaccount) }}
+                                    <h6 class='mt-2'>Montant du virement</h6>
+                                        {{ form_row(VirementFormType.amount) }}
+                                    <h6 class='mt-2'>Description</h6>
+                                        {{ form_row(VirementFormType.description) }}
+                                    {{ form_row(VirementFormType.envoyer) }}
+                                {{ form_end(VirementFormType) }}
+                    </div> <!-- End -->
+                    <!-- Paypal info -->
+                    <div id="paypal" class="tab-pane fade pt-3">
+                        {{ form_errors(BuyOnlineFormType) }}
+                        {{ form_start(BuyOnlineFormType) }}
+                            <h6 class='mt-2'>Montant de l'achat</h6>
+                          {{ form_row(BuyOnlineFormType.amount) }}
+                          {{ form_row(BuyOnlineFormType.Acheter) }}
+                        {{ form_end(BuyOnlineFormType) }}
+                    </div>
+                    <div id="net-banking" class="tab-pane fade pt-3">
+                        <div class="form-group "> 
+                        {{ form_errors(RetraitDepotFormType) }}
+                        {{ form_start(RetraitDepotFormType) }}
+                            <h6 class='mt-2'>Type de l'opération</h6>
+                            {{ form_row(RetraitDepotFormType.type) }}
+                            <h6 class='mt-2'>Montant de l'opération</h6>
+                            {{ form_row(RetraitDepotFormType.amount) }}
+                           {{ form_row(RetraitDepotFormType.envoyer) }} 
+                        <div class="form-group">
+                            {{ form_end(RetraitDepotFormType) }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+ 
+                                <script type='text/javascript' src='https://stackpath.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.bundle.min.js'></script>
+                                <script type='text/javascript' src='#'></script>
+                                <script type='text/javascript' src='#'></script>
+                                <script type='text/javascript' src='#'></script>
+                                <script type='text/javascript'>$(function() {$('[data-toggle="tooltip"]').tooltip()})</script>
+                                <script type='text/javascript'>var myLink = document.querySelector('a[href="#"]');
+                                myLink.addEventListener('click', function(e) {
+                                  e.preventDefault();
+                                });</script>
+                           
+                                </body>
+                            </html>

@@ -1,0 +1,112 @@
+<head>
+<link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+<link rel="stylesheet" type="text/css" href="https://pixinvent.com/stack-responsive-bootstrap-4-admin-template/app-assets/css/bootstrap-extended.min.css">
+<link rel="stylesheet" type="text/css" href="https://pixinvent.com/stack-responsive-bootstrap-4-admin-template/app-assets/fonts/simple-line-icons/style.min.css">
+<link rel="stylesheet" type="text/css" href="https://pixinvent.com/stack-responsive-bootstrap-4-admin-template/app-assets/css/colors.min.css">
+<link rel="stylesheet" type="text/css" href="https://pixinvent.com/stack-responsive-bootstrap-4-admin-template/app-assets/css/bootstrap.min.css">
+<link href="https://fonts.googleapis.com/css?family=Montserrat&display=swap" rel="stylesheet">
+</head>
+<body>
+<header>
+<nav class="navbar navbar-expand-lg navbar-light mb-4">
+  <a class="navbar-brand" href="{{ path('app_feed') }}">KoKoTBank.</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item active">
+        <a class="nav-link text-primary" href="{{ path('app_virement') }}">Faire un virement <span class="sr-only">(current)</span></a>
+      </li>
+      <li class="nav-item">
+                 {% if not hasSavingsAccount %}
+                    <a href="{{ path('create_savings_account') }}" class="nav-link text-primary">Créer Compte Epargne Action</a>
+                  {% endif %}
+      </li>
+      <li class="nav-item">
+               {% if not hasCurrentAccount %}
+                      <a href="{{ path('create_current_account') }}" class="nav-link text-primary">Créer Compte Courant</a>
+                {% endif %}
+      </li>
+    </ul>
+  </div>
+  <a href="{{path('logout')}}" >Se Déconnecter</a>
+</nav>
+</header>
+<section class="container ">
+<section class="container">
+      <div class="col-sm">
+        <div class="card">
+          <div class="card-content">
+            <div class="card-body">
+              <div class="media d-flex">
+                <div class="media-body text-left">
+                  <h3 class="success">Bienvenue</h3>
+                  <span>{{ client.firstname }} {{ client.lastname }} membre depuis le {{ client.registrationDate|date('d-m-Y') }}</span>
+                </div>
+                <div class="align-self-center">
+                  <i class="icon-user info font-large-2 float-right"></i>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+</section>
+<section class="container">
+    <div class="row">
+        {% for account in accounts %}
+            <div class="col-sm">
+                <div class="card">
+                    <div class="card-content">
+                        <div class="card-body">
+                            <div class="media d-flex">
+                                <div class="media-body text-left">
+                                    <h3 class="danger">${{ account.balance }}</h3>
+                                    <span>Numéro du compte : {{ account.id }}</span>
+                                    {% if account.type == 'Compte Courant' %}
+                                        <span>Type: Compte Courant</span>
+                                    {% elseif account.type == 'Compte Epargne Action' %}
+                                        <span>Type: Compte Epargne Action</span>
+                                    {% endif %}
+                                </div>
+                                <div class="align-self-center">
+                                    <i class="icon-{{ account.type == 'Compte Courant' ? 'pie-chart' : 'rocket' }} warning font-large-2 float-right"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+</section>
+
+<section class="container">
+ {% for transactions in transaction %}
+<div class="">
+    <div class="col-sm">
+      <div class="card">
+        <div class="card-content">
+          <div class="card-body cleartfix">
+            <div class="media align-items-stretch">
+              <div class="align-self-center">
+                <h1 class="mr-2">${{ transactions.amount }}</h1>
+              </div>
+              <div class="media-body">
+                <h4>{{ transactions.type }}</h4>
+                <span>{{ transactions.description }}</span>
+                <span>{{ transactions.date|date("m/d/Y") }}</span>
+              </div>
+              <div class="align-self-center">
+                <i class="icon-wallet success font-large-2"></i>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+        {% endfor %}
+</section>
+</section>
+</body>

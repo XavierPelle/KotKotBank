@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+     <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text></svg>">
+            <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,700" rel="stylesheet">
+            <link rel="stylesheet" href="/index/fonts/icomoon/style.css">
+            <link rel="stylesheet" href="/index/css/bootstrap.min.css">
+            <link rel="stylesheet" href="/index/css/jquery-ui.css">
+            <link rel="stylesheet" href="/index/css/owl.carousel.min.css">
+            <link rel="stylesheet" href="/index/css/owl.theme.default.min.css">
+            <link rel="stylesheet" href="/index/css/owl.theme.default.min.css">
+            <link rel="stylesheet" href="/index/css/jquery.fancybox.min.css">
+            <link rel="stylesheet" href="/index/css/bootstrap-datepicker.css">
+            <link rel="stylesheet" href="/index/fonts/flaticon/font/flaticon.css">
+            <link rel="stylesheet" href="/index/css/aos.css">
+            <link rel="stylesheet" href="/index/css/style.css">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12UkPPV1l2347Jg0vLPo5yWV9Iq8fFj1/5PhvgdbTf3ixf0QfabHx9s" crossorigin="anonymous">
+</head>
+<body data-spy="scroll" data-target=".site-navbar-target" data-offset="300">
+  <div id="overlayer"></div>
+  <div class="loader">
+    <div class="spinner-border text-primary" role="status">
+      <span class="sr-only">Loading...</span>
+    </div>
+  </div>
+  <div class="site-wrap">
+    <div class="site-mobile-menu site-navbar-target">
+      <div class="site-mobile-menu-header">
+        <div class="site-mobile-menu-close mt-3">
+          <span class="icon-close2 js-menu-toggle"></span>
+        </div>
+      </div>
+      <div class="site-mobile-menu-body"></div>
+    </div>
+    <header class="site-navbar js-sticky-header site-navbar-target" role="banner">
+      <div class="container">
+        <div class="row align-items-center">
+          <div class="col-6 col-xl-2">
+            <h1 class="mb-0 site-logo"><a href="{{ path('app_feed') }}" class="h2 mb-0">KoKoTBank<span class="text-primary">.</span> </a></h1>
+          </div>
+          <div class="col-12 col-md-10 d-none d-xl-block">
+            <nav class="site-navigation position-relative text-right" role="navigation">
+              <ul class="site-menu main-menu js-clone-nav mr-auto d-none d-lg-block">
+                
+                <li><a href="{{ path('login') }}" class="nav-link">Se Connecter</a></li>
+                <li><a href="{{ path('app_register') }}" class="nav-link">Ouvrir un compte</a></li>
+                <li class="social"><a href="#contact-section" class="nav-link"><span class="icon-facebook"></span></a></li>
+                <li class="social"><a href="#contact-section" class="nav-link"><span class="icon-twitter"></span></a></li>
+                <li class="social"><a href="#contact-section" class="nav-link"><span class="icon-linkedin"></span></a></li>
+              </ul>
+            </nav>
+          </div>
+          <div class="col-6 d-inline-block d-xl-none ml-md-0 py-3" style="position: relative; top: 3px;"><a href="#" class="site-menu-toggle js-menu-toggle float-right"><span class="icon-menu h3"></span></a></div>
+        </div>
+      </div>
+    </header>
+    <div class="site-blocks-cover overlay" style="background-image: url(/index/images/hero_2.jpg);" data-aos="fade" id="home-section">
+      <div class="container">
+        <div class="row align-items-center justify-content-center">
+          <div class="col-md-10 mt-lg-5 text-center">
+            <div class="single-text owl-carousel">
+              <div class="slide">
+                <h1 class="text-uppercase" data-aos="fade-up">Compte Courant</h1>
+                <p class="mb-5 desc"  data-aos="fade-up" data-aos-delay="100">Explorez nos solutions bancaires innovantes conçues pour s'adapter à votre style de vie moderne. Gérez facilement vos finances grâce à notre plateforme en ligne sécurisée et conviviale.</p>
+                <div data-aos="fade-up" data-aos-delay="100">
+                  <a href="{{ path('app_register') }}"  class="btn  btn-primary mr-2 mb-2">Ouvrir un compte</a>
+                </div>
+              </div>
+              <div class="slide">
+                <h1 class="text-uppercase" data-aos="fade-up">Solutions d'action</h1>
+                <p class="mb-5 desc" data-aos="fade-up" data-aos-delay="100">Découvrez des options de financement personnalisées pour réaliser vos projets. Que ce soit pour une maison, une voiture ou des études, notre banque en ligne est là pour vous soutenir</p>
+                <div data-aos="fade-up" data-aos-delay="100">
+                  <a href="{{ path('app_register') }}"  class="btn  btn-primary mr-2 mb-2">Ouvrir un compte</a>
+                </div>
+              </div>
+              <div class="slide">
+                <h1 class="text-uppercase" data-aos="fade-up">Comptes d'Épargne</h1>
+                <p class="mb-5 desc" data-aos="fade-up" data-aos-delay="100">Optimisez vos économies avec nos comptes d'épargne à haut rendement. Profitez d'une flexibilité totale et d'un accès en ligne à vos fonds, où que vous soyez</p>
+                <div data-aos="fade-up" data-aos-delay="100">
+                  <a href="{{ path('app_register') }}"  class="btn  btn-primary mr-2 mb-2">Ouvrir un compte</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <a href="#next" class="mouse smoothscroll">
+        <span class="mouse-icon">
+          <span class="mouse-wheel"></span>
+        </span>
+      </a>
+    </div>  
+    <div class="site-section cta-big-image" id="about-section">
+      <div class="container">
+        <div class="row mb-5 justify-content-center">
+          <div class="col-md-8 text-center">
+            <h2 class="section-title mb-3" data-aos="fade-up" data-aos-delay="">À Propos de Nous</h2>
+            <p class="lead" data-aos="fade-up" data-aos-delay="100">Chez KoKoTBank, nous comprenons que la gestion de vos finances doit être simple, sécurisée et accessible de partout.</p>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-lg-6 mb-5" data-aos="fade-up" data-aos-delay="">
+            <figure class="circle-bg">
+            <img src="/index/images/img_2.jpg" alt="Free Website Template by Free-Template.co" class="img-fluid">
+            </figure>
+          </div>
+          <div class="col-lg-5 ml-auto" data-aos="fade-up" data-aos-delay="100">
+            
+            <h3 class="text-black mb-4">On vous accompagne</h3>
+
+            <p>Bienvenue chez KoKoTBank, votre banque numérique de confiance. Chez KoKoTBank, nous sommes dédiés à révolutionner l'expérience bancaire en ligne, en mettant l'accent sur l'innovation, la sécurité et l'accessibilité. Fondée par une équipe d'experts en technologie et en finance, notre mission est de fournir des solutions bancaires transparentes et efficaces adaptées aux besoins du XXIe siècle.</p>
+
+            <p></p>
+          </div>
+        </div>    
+      </div>  
+    </div>
+    <div class="site-section" id="next">
+      <div class="container">
+        <div class="row mb-5">
+          <div class="col-md-4 text-center" data-aos="fade-up" data-aos-delay="">
+            <img src="/index/images/flaticon-svg/svg/001-wallet.svg" alt="Free Website Template by Free-Template.co" class="img-fluid w-25 mb-4">
+            <h3 class="card-title">Economiser de l'argent</h3>
+            <p>Grace a notre service de payment sans frais économisez plusieurs milliers d'euros par an.</p>
+          </div>
+          <div class="col-md-4 text-center" data-aos="fade-up" data-aos-delay="100">
+            <img src="/index/images/flaticon-svg/svg/004-cart.svg" alt="Free Website Template by Free-Template.co" class="img-fluid w-25 mb-4">
+            <h3 class="card-title">Achetez en ligne</h3>
+            <p>Achetez en ligne de maniere sécurisée grace à notre systeme de sécurité sans faille.</p>
+          </div>
+          <div class="col-md-4 text-center" data-aos="fade-up" data-aos-delay="200">
+            <img src="/index/images/flaticon-svg/svg/006-credit-card.svg" alt="Free Website Template by Free-Template.co" class="img-fluid w-25 mb-4">
+            <h3 class="card-title">Carte personnalisées.</h3>
+            <p>Nous vous proposons des cartes de crédit completement personnalisées.</p>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-lg-6 mb-5" data-aos="fade-up" data-aos-delay="">
+            <figure class="circle-bg">
+            <img src="/index/images/about_2.jpg" alt="Free Website Template by Free-Template.co" class="img-fluid">
+            </figure>
+          </div>
+          <div class="col-lg-5 ml-auto" data-aos="fade-up" data-aos-delay="100">
+            <div class="mb-4">
+              <h3 class="h3 mb-4 text-black">Être à votre écoute. Notre priorité</h3>
+              <p>Notre service client est disponible 24h/24. Rapide gratuit et sans frais ! Vous êtes notre priorité</p>  
+            </div> 
+            <div class="mb-4">
+              <ul class="list-unstyled ul-check success">
+                <li>Disponible 24h/24</li>
+                <li>Au téléphone ou par chat</li>
+                <li>Rapide et sans attente</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <section class="site-section bg-light" id="contact-section" data-aos="fade">
+      <div class="container">
+        <div class="row mb-5">
+          <div class="col-12 text-center">
+            <h2 class="section-title mb-3">Contactez nous</h2>
+          </div>
+        </div>
+        <div class="row mb-5">
+          <div class="col-md-4 text-center">
+            <p class="mb-4">
+              <span class="icon-room d-block h2 text-primary"></span>
+              <span>59, Avenue de Toulouse. 34070 Montpellier, Occitanie, FR</span>
+            </p>
+          </div>
+          <div class="col-md-4 text-center">
+            <p class="mb-4">
+              <span class="icon-phone d-block h2 text-primary"></span>
+              <a href="#">06 84 68 74 12</a>
+            </p>
+          </div>
+          <div class="col-md-4 text-center">
+            <p class="mb-0">
+              <span class="icon-mail_outline d-block h2 text-primary"></span>
+              <a href="#">KoKoTBank@banque.com</a>
+            </p>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12 mb-5">
+
+            
+
+            <form action="#" class="p-5 bg-white">
+              
+              <h2 class="h4 text-black mb-5">Formulaire de contact</h2> 
+
+              <div class="row form-group">
+                <div class="col-md-6 mb-3 mb-md-0">
+                  <label class="text-black" for="fname">Prénom</label>
+                  <input type="text" id="fname" class="form-control">
+                </div>
+                <div class="col-md-6">
+                  <label class="text-black" for="lname">Nom</label>
+                  <input type="text" id="lname" class="form-control">
+                </div>
+              </div>
+
+              <div class="row form-group">
+                
+                <div class="col-md-12">
+                  <label class="text-black" for="email">Email</label> 
+                  <input type="email" id="email" class="form-control">
+                </div>
+              </div>
+
+              <div class="row form-group">
+                
+                <div class="col-md-12">
+                  <label class="text-black" for="subject">Sujet</label> 
+                  <input type="subject" id="subject" class="form-control">
+                </div>
+              </div>
+
+              <div class="row form-group">
+                <div class="col-md-12">
+                  <label class="text-black" for="message">Message</label> 
+                  <textarea name="message" id="message" cols="30" rows="7" class="form-control" placeholder="Ecrivez vos questions ici..."></textarea>
+                </div>
+              </div>
+
+              <div class="row form-group">
+                <div class="col-md-12">
+                  <input type="submit" value="Envoyez" class="btn btn-primary btn-md text-white">
+                </div>
+              </div>
+
+  
+            </form>
+          </div>
+          
+        </div>
+      </div>
+    </section>
+
+    
+    <footer class="site-footer">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-9">
+            <div class="row">
+              <div class="col-md-5">
+                <h2 class="footer-heading mb-4">A propos de nous</h2>
+                <p>Nous sommes la meilleure banque du monde venez chez nous.</p>
+              </div>
+              <div class="col-md-3 ml-auto">
+                <h2 class="footer-heading mb-4">Liens rapide</h2>
+                <ul class="list-unstyled">
+                  <li><a href="#about-section" class="smoothscroll">Terms</a></li>
+                  <li><a href="#about-section" class="smoothscroll">Policy</a></li>
+                  <li><a href="#contact-section" class="smoothscroll">Contactez nous</a></li>
+                </ul>
+              </div>
+              <div class="col-md-3 footer-social">
+                <h2 class="footer-heading mb-4">Suivez nous</h2>
+                <a href="#" class="pl-0 pr-3"><span class="icon-facebook"></span></a>
+                <a href="#" class="pl-3 pr-3"><span class="icon-twitter"></span></a>
+                <a href="#" class="pl-3 pr-3"><span class="icon-instagram"></span></a>
+                <a href="#" class="pl-3 pr-3"><span class="icon-linkedin"></span></a>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-3">
+            <h2 class="footer-heading mb-4">Newsletter</h2>
+            <form action="#" method="post" class="footer-subscribe">
+              <div class="input-group mb-3">
+                <input type="text" class="form-control border-secondary text-white bg-transparent" placeholder="Entrez Email" aria-label="Enter Email" aria-describedby="button-addon2">
+                <div class="input-group-append">
+                  <button class="btn btn-primary text-black" type="button" id="button-addon2">Envoyez</button>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+        <div class="row pt-5 mt-5 text-center">
+          <div class="col-md-12">
+            <div class="border-top pt-5">
+            </div>
+          </div>
+        </div>
+      </div>
+    </footer>
+  </div>
+  <script src="/index/js/jquery-3.3.1.min.js"></script>
+  <script src="/index/js/jquery-ui.js"></script>
+  <script src="/index/js/popper.min.js"></script>
+  <script src="/index/js/bootstrap.min.js"></script>
+  <script src="/index/js/owl.carousel.min.js"></script>
+  <script src="/index/js/jquery.countdown.min.js"></script>
+  <script src="/index/js/jquery.easing.1.3.js"></script>
+  <script src="/index/js/aos.js"></script>
+  <script src="/index/js/jquery.fancybox.min.js"></script>
+  <script src="/index/js/jquery.sticky.js"></script>
+  <script src="/index/js/isotope.pkgd.min.js"></script>
+  <script src="/index/js/main.js"></script>
