@@ -1,0 +1,33 @@
+{# Titre de la page #}
+{% block title %}Mes actions{% endblock %}
+
+{# Ici vous mettez vos codes HTML et balises Twig au besoin #}
+{% block body %}
+    <p>Bonjour {{ client }}</p>
+
+<table>
+    <tr>
+        <th>Name</th>
+        <th>Unitaire Price</th>
+        <th>Quantity</th>
+        <th>Total Price</th>
+    </tr>
+    {% for action in actions %}
+    <tr>
+        <td>{{ action.shareName }}</td>
+        <td>{{ action.sharePrice }}</td>
+        <td>{{ action.quantity }}</td>
+        <td>{{ action.totalPrice }}</td>
+    </tr>
+    {% endfor %}
+</table>
+
+{{ form_errors(VenteFormType) }}
+{{ form_start(VenteFormType) }}
+{{ form_end(VenteFormType) }}
+
+
+
+
+
+{% endblock %}

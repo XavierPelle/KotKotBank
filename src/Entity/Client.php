@@ -54,10 +54,10 @@ class Client implements UserInterface, PasswordAuthenticatedUserInterface
     private Collection $accounts;
 
     #[ORM\OneToOne(mappedBy: 'client', cascade: ['persist', 'remove'])]
-    private ?Portefolio $portefolio = null;
+    private ?ShareTransaction $shareTransaction = null;
 
     #[ORM\OneToOne(mappedBy: 'client', cascade: ['persist', 'remove'])]
-    private ?ShareTransaction $shareTransaction = null;
+    private ?Portfolio $portfolio = null;
 
     public function __construct()
     {
@@ -226,28 +226,6 @@ class Client implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    public function getPortefolio(): ?Portefolio
-    {
-        return $this->portefolio;
-    }
-
-    public function setPortefolio(?Portefolio $portefolio): static
-    {
-        // unset the owning side of the relation if necessary
-        if ($portefolio === null && $this->portefolio !== null) {
-            $this->portefolio->setClient(null);
-        }
-
-        // set the owning side of the relation if necessary
-        if ($portefolio !== null && $portefolio->getClient() !== $this) {
-            $portefolio->setClient($this);
-        }
-
-        $this->portefolio = $portefolio;
-
-        return $this;
-    }
-
     public function getShareTransaction(): ?ShareTransaction
     {
         return $this->shareTransaction;
@@ -266,6 +244,28 @@ class Client implements UserInterface, PasswordAuthenticatedUserInterface
         }
 
         $this->shareTransaction = $shareTransaction;
+
+        return $this;
+    }
+
+    public function getPortfolio(): ?Portfolio
+    {
+        return $this->portfolio;
+    }
+
+    public function setPortfolio(?Portfolio $portfolio): static
+    {
+        // unset the owning side of the relation if necessary
+        if ($portfolio === null && $this->portfolio !== null) {
+            $this->portfolio->setClient(null);
+        }
+
+        // set the owning side of the relation if necessary
+        if ($portfolio !== null && $portfolio->getClient() !== $this) {
+            $portfolio->setClient($this);
+        }
+
+        $this->portfolio = $portfolio;
 
         return $this;
     }

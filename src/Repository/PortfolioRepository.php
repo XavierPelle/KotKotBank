@@ -2,27 +2,27 @@
 
 namespace App\Repository;
 
-use App\Entity\Portefolio;
+use App\Entity\Portfolio;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
- * @extends ServiceEntityRepository<Portefolio>
+ * @extends ServiceEntityRepository<Portfolio>
  *
- * @method Portefolio|null find($id, $lockMode = null, $lockVersion = null)
- * @method Portefolio|null findOneBy(array $criteria, array $orderBy = null)
- * @method Portefolio[]    findAll()
- * @method Portefolio[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @method Portfolio|null find($id, $lockMode = null, $lockVersion = null)
+ * @method Portfolio|null findOneBy(array $criteria, array $orderBy = null)
+ * @method Portfolio[]    findAll()
+ * @method Portfolio[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class PortefolioRepository extends ServiceEntityRepository
+class PortfolioRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, Portefolio::class);
+        parent::__construct($registry, Portfolio::class);
     }
 
 //    /**
-//     * @return Portefolio[] Returns an array of Portefolio objects
+//     * @return Portfolio[] Returns an array of Portfolio objects
 //     */
 //    public function findByExampleField($value): array
 //    {
@@ -36,7 +36,7 @@ class PortefolioRepository extends ServiceEntityRepository
 //        ;
 //    }
 
-//    public function findOneBySomeField($value): ?Portefolio
+//    public function findOneBySomeField($value): ?Portfolio
 //    {
 //        return $this->createQueryBuilder('p')
 //            ->andWhere('p.exampleField = :val')

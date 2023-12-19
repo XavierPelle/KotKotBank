@@ -79,14 +79,8 @@ class Company
         return $this;
     }
 
-    public function jsonSerialize() {
-        // Return an associative array representing the object
-        return [
-            'id' => $this->id,
-            'name' => $this->name,
-            'domain' => $this->domain,
-            'sharePrice' => $this->sharePrice,
-            'shareQuantity' => $this->shareQuantity,
-        ];
+    public function __toString() : string 
+    {
+        return $this->getName();    
     }
 }

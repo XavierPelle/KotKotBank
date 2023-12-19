@@ -1,0 +1,26 @@
+<html>
+<body>
+    <div id="all-companies">
+    </div>
+<script>
+    function fetchCompanies() {
+        fetch('/api/company')
+            .then(response => response.json())
+            .then(data => {
+                const allCompaniesDiv = document.getElementById('all-companies');
+                allCompaniesDiv.innerHTML = '';
+                data.forEach(company => {
+                    let div = document.createElement('div');
+                    div.innerHTML = `Nom: ${company.name}, Domain: ${company.domain}, Share Price: ${company.sharePrice}`;
+                    allCompaniesDiv.appendChild(div);
+                });
+            })
+            .catch(error => console.error('Erreur lors de la récupération', error));
+    }
+
+    fetchCompanies();
+    setInterval(fetchCompanies, 10000);
+</script>
+
+</body>
+</html>

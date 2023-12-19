@@ -20,6 +20,8 @@ use App\Form\VirementFormType;
 use App\Form\BuyOnlineFormType;
 use App\Form\RetraitDepotFormType;
 
+use App\Entity\Portfolio;
+
 class HomeController extends AbstractController
 {
 
@@ -41,6 +43,7 @@ class HomeController extends AbstractController
         $hasCurrentAccount = false;
         $hasSavingsAccount = false;
 
+
         foreach ($existingAccounts as $account) {
             if ($account->getType() === 'Compte Courant') {
                 $emeteurAccount = $account->getId();
@@ -52,7 +55,6 @@ class HomeController extends AbstractController
                 $transaction2 = $entityManager->getRepository(Transaction::class)->findBy(['beneficiaryAccount' => $beneficiaryAccount]);
             }
         }
-
 
             return $this->render('home/feed.html.twig', [
                 'client' => $client,

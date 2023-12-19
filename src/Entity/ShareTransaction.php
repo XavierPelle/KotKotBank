@@ -22,6 +22,15 @@ class ShareTransaction
     #[ORM\OneToOne(inversedBy: 'shareTransaction', cascade: ['persist', 'remove'])]
     private ?Client $client = null;
 
+    #[ORM\Column(nullable: true)]
+    private ?int $Quantity = null;
+
+    #[ORM\Column(nullable: true)]
+    private ?float $totalPrice = null;
+
+    #[ORM\Column(length: 50, nullable: true)]
+    private ?string $type = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -59,6 +68,42 @@ class ShareTransaction
     public function setClient(?Client $client): static
     {
         $this->client = $client;
+
+        return $this;
+    }
+
+    public function getQuantity(): ?int
+    {
+        return $this->Quantity;
+    }
+
+    public function setQuantity(?int $Quantity): static
+    {
+        $this->Quantity = $Quantity;
+
+        return $this;
+    }
+
+    public function getTotalPrice(): ?float
+    {
+        return $this->totalPrice;
+    }
+
+    public function setTotalPrice(?float $totalPrice): static
+    {
+        $this->totalPrice = $totalPrice;
+
+        return $this;
+    }
+
+    public function getType(): ?string
+    {
+        return $this->type;
+    }
+
+    public function setType(?string $type): static
+    {
+        $this->type = $type;
 
         return $this;
     }
