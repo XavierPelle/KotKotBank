@@ -5,6 +5,12 @@
 {% block body %}
     <p>Bonjour {{ client }}</p>
 
+    {% for message in app.flashes('error') %}
+        <div class="alert alert-danger">
+            {{ message }}
+        </div>
+    {% endfor %}
+
 <table>
     <tr>
         <th>Name</th>
@@ -15,7 +21,7 @@
     {% for action in actions %}
     <tr>
         <td>{{ action.shareName }}</td>
-        <td>{{ action.sharePrice }}</td>
+        <td>{{ action.price }}</td>
         <td>{{ action.quantity }}</td>
         <td>{{ action.totalPrice }}</td>
     </tr>
@@ -25,9 +31,3 @@
 {{ form_errors(VenteFormType) }}
 {{ form_start(VenteFormType) }}
 {{ form_end(VenteFormType) }}
-
-
-
-
-
-{% endblock %}

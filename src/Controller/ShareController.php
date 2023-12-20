@@ -120,20 +120,36 @@ class ShareController extends AbstractController
             $transaction->setTotalPrice($prixAction);
             $transaction->setType("ACHAT");
 
-            //Créer un nouveau portfolio
-            $portfolio = new Portfolio();
-            $portfolio->setShareName($actionCompany);
-            $portfolio->setClient($client);
-            $portfolio->setPrice($prixUnitaire);
-            $portfolio->setQuantity($quantity);
-            $portfolio->setTotalPrice($prixAction);
 
+
+            $clientPortfolio = $entityManager->getRepository(Portfolio::class)->findOneBy([
+                'client' => $client,
+                'shareName' => $data['name']->getName(),
+            ]);
+
+            if($clientPortfolio != null){
+                $clientPortfolio->setQuantity($clientPortfolio->getQuantity() + $quantity);
+                $clientPortfolio->setTotalPrice($clientPortfolio->getTotalPrice() + $prixAction);
+                $entityManager->persist($clientPortfolio);
+            } 
+            else {
+                //Créer un nouveau portfolio
+                $portfolio = new Portfolio();
+                $portfolio->setShareName($actionCompany);
+                $portfolio->setClient($client);
+                $portfolio->setPrice($prixUnitaire);
+                $portfolio->setQuantity($quantity);
+                $portfolio->setTotalPrice($prixAction);
+                $entityManager->persist($portfolio);
+            }
+
+            // 
 
 
             //Enregistre dans la base de donnée
             $entityManager->persist($upDateStock);
             $entityManager->persist($transaction);
-            $entityManager->persist($portfolio);
+            
             $entityManager->flush();
 
         }
@@ -157,25 +173,23 @@ class ShareController extends AbstractController
     #[Route('/vente', name:'vente')]
     public function vente(Request $request, EntityManagerInterface $entityManager): Response
     {
-        // $user = $this->getUser();
-        // $transaction = $user->getShareTransaction();
-        //dump($transaction);
         $client = $this->getUser();
+        $savingAccount = $entityManager->getRepository(Account::class)->findOneBy([
+            'client' => $client,
+            'type' => 'Compte Epargne Action'
+        ]);
 
-        $clientTransaction = $entityManager->getRepository(ShareTransaction::class)->findBy([
+        $portfolioClient = $entityManager->getRepository(Portfolio::class)->findBy([
             'client' => $client->getId(),
         ]);
-        //dump($clientTransaction);
-    
-        $form = $this->createForm(VenteFormType::class, null, ['transactions' => $clientTransaction]);
+
+        $form = $this->createForm(VenteFormType::class, null, ['transactions' => $portfolioClient]);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $data = $form->getData();
-            //dump($data);
 
             $companyRepository = $entityManager->getRepository(ShareTransaction::class);
-            //dump($companyRepository);
             $salingAction = $companyRepository->findOneBy([
                 'client' => $client,
                 'shareName' => $data['shareName']
@@ -183,22 +197,29 @@ class ShareController extends AbstractController
 
             $p = $salingAction->getSharePrice();
             $tp = $p * $data['quantity'];
-            //dump($salingAction);
-
 
             //Modif portfolio
-
             $clientPortfolio = $entityManager->getRepository(Portfolio::class)->findOneBy([
                 'client' => $client,
                 'shareName' => $data['shareName'],
             ]);
 
-            $clientPortfolio->setQuantity($clientPortfolio->getQuantity() - $data['quantity']);
-            $clientPortfolio->setPrice($clientPortfolio->getPrice());
-            $clientPortfolio->setTotalPrice($clientPortfolio->getTotalPrice() - $tp);
+            if($clientPortfolio->getQuantity() > $data['quantity']){
 
-            $entityManager->persist($clientPortfolio);
-            
+                $clientPortfolio->setQuantity($clientPortfolio->getQuantity() - $data['quantity']);
+                $clientPortfolio->setPrice($clientPortfolio->getPrice());
+                $clientPortfolio->setTotalPrice($clientPortfolio->getTotalPrice() - $tp);
+                $entityManager->persist($clientPortfolio);
+                
+            }
+            elseif ($clientPortfolio->getQuantity() == $data['quantity']){
+                $entityManager->remove($clientPortfolio);
+            }
+            else {
+                $this->addFlash('error', 'Nombre d\'action insuffisant');
+            }
+
+            //Instancie un objet ShareTransaction
             $transaction = new ShareTransaction();
             $transaction->setClient($client);
             $transaction->setShareName($data['shareName']);
@@ -208,20 +229,19 @@ class ShareController extends AbstractController
             $transaction->setType('VENTE');
             $entityManager->persist($transaction);
 
+            //créditer le compte epargne
+            $savingAccount->setBalance($savingAccount->getBalance() + $tp);
+            $entityManager->persist($savingAccount);
+
             $entityManager->flush();
             return $this->redirectToRoute('vente');
         }
 
-        // dump($clientTransaction);
-
         return $this->render('home/vente.html.twig', [
             'VenteFormType' => $form->createView(),
             'client' => $client->getFirstname(),
-            'actions' => $clientTransaction,
+            'actions' => $portfolioClient,
         ]);
-
-        
-
 
     }
 }

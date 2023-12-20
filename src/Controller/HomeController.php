@@ -257,3 +257,10 @@ class HomeController extends AbstractController
     }
 
 }
+
+   // if ($data['quantity'] >= 5) {
+            //     $newSharePrice = $sharePrice * 0.95; 
+            //     $company->setSharePrice($newSharePrice);
+            //     $entityManager->persist($company);
+            // }
+    
