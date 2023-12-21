@@ -1,26 +1,142 @@
-<html>
-<body>
-    <div id="all-companies">
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+<link rel="stylesheet" type="text/css" href="https://pixinvent.com/stack-responsive-bootstrap-4-admin-template/app-assets/css/bootstrap-extended.min.css">
+<link rel="stylesheet" type="text/css" href="https://pixinvent.com/stack-responsive-bootstrap-4-admin-template/app-assets/fonts/simple-line-icons/style.min.css">
+<link rel="stylesheet" type="text/css" href="https://pixinvent.com/stack-responsive-bootstrap-4-admin-template/app-assets/css/colors.min.css">
+<link rel="stylesheet" type="text/css" href="https://pixinvent.com/stack-responsive-bootstrap-4-admin-template/app-assets/css/bootstrap.min.css">
+<link href="https://fonts.googleapis.com/css?family=Montserrat&display=swap" rel="stylesheet">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stock Table</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css">
+    <style>
+        .up {
+            background-color: #0A9E3D;
+            color: white;
+              text-decoration: none; 
+
+        }
+ 
+        .down {
+            background-color: #cc1919;
+            color: white;
+              text-decoration: none; 
+               
+        }
+            .table a {
+                 color: white;
+        text-decoration: none; 
+        color: inherit; 
+        }
+
+        .table a:hover {
+             color: white;
+            text-decoration: none; 
+            color: inherit; 
+        }
+    </style>
+</head>
+
+<body class="snippet-body">
+    <header>
+<nav class="navbar navbar-expand-lg navbar-light mb-4">
+  <a class="navbar-brand" href="{{ path('app_feed') }}">KoKoTBank.</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item active">
+        <a class="nav-link text-primary" href="{{ path('app_virement') }}">Faire un virement</a>
+      </li>
+         <li class="nav-item active">
+        <a class="nav-link text-primary" href="{{ path('vente') }}">Voir mes actions</a>
+      </li>
+          <li class="nav-item active">
+        <a class="nav-link text-primary" href="{{ path('action') }}">Place boursière</a>
+      </li>
+    </ul>
+  </div>
+  <a href="{{path('logout')}}" >Déconnection</a>
+</nav>
+</header>
+    <div class="container mt-5 px-2">
+        <div class="table-responsive">
+{{ form_errors(AchatFormType) }}
+{{ form_start(AchatFormType) }}
+  <div class="form-row align-items-center">
+    <div class="col-auto">
+      {{ form_row(AchatFormType.name) }}
     </div>
-<script>
-    function fetchCompanies() {
-        fetch('/api/company')
-            .then(response => response.json())
-            .then(data => {
-                const allCompaniesDiv = document.getElementById('all-companies');
-                allCompaniesDiv.innerHTML = '';
-                data.forEach(company => {
-                    let div = document.createElement('div');
-                    div.innerHTML = `Nom: ${company.name}, Domain: ${company.domain}, Share Price: ${company.sharePrice}`;
-                    allCompaniesDiv.appendChild(div);
-                });
-            })
-            .catch(error => console.error('Erreur lors de la récupération', error));
-    }
+    <div class="col-auto">
+           {{ form_row(AchatFormType.quantity) }}
+      </div>
+           {{ form_row(AchatFormType.envoyer) }}
+{{ form_end(AchatFormType) }}
 
-    fetchCompanies();
-    setInterval(fetchCompanies, 10000);
-</script>
+ <p class='ml-5 mt-5'>Solde du Compte Epargne Action : ${{ account.balance }} </p>
 
+            <table class="table table-responsive table-borderless">
+                <thead>
+                    <tr class="bg-light">
+                        <th scope="col" width="5%">Id</th>
+                        <th scope="col" width="25%">Nom</th>
+                        <th scope="col" width="30%">Domaine</th>
+                        <th scope="col" width="10%">Prix de l'action</th>
+                        <th scope="col" width="10%">Action disponible</th>
+                    </tr>
+                </thead>
+                <tbody id="tr"></tbody>
+            </table>
+        </div>
+    </div>
+ <a href=`/action/${company.id}``> </a>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js"></script>
+ 
+    <script>
+        let colorSharePrices = {};
+
+        function fetchCompanies() {
+            fetch('/api/company')
+                .then(response => response.json())
+                .then(data => {
+                    let tr = document.getElementById('tr');
+                    let tab = '';
+ 
+                    data.forEach(company => {
+                        const previousPrice = colorSharePrices[company.id];
+                        const priceClass = determinePriceClass(previousPrice, company.sharePrice);
+        
+                        tab += `<tr class="${priceClass}">
+                            <td> <a href="/action/${company.id}"> ${company.id}</a></td>
+                            <td><a href="/action/${company.id}">${company.name}</a></td>
+                            <td><a href="/action/${company.id}">${company.domain}</a></td>
+                            <td><a href="/action/${company.id}">${company.sharePrice}</a></td>
+                            <td><a href="/action/${company.id}">${company.shareQuantity}</a></td>
+                        </tr>`;
+ 
+                        colorSharePrices[company.id] = company.sharePrice;
+                    });
+ 
+                    tr.innerHTML = tab;
+                })
+                .catch(error => console.error('Erreur lors de la récupération', error));
+        }
+ 
+        function determinePriceClass(previousPrice, currentPrice) {
+            if (previousPrice === undefined || currentPrice > previousPrice) {
+                return 'up';
+            } else if (currentPrice < previousPrice) {
+                return 'down';
+            } else {
+                return '';
+            }
+        }
+ 
+        fetchCompanies();
+        setInterval(fetchCompanies, 10000);
+    </script>
 </body>
 </html>

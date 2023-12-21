@@ -18,14 +18,20 @@ class AchatFormType extends AbstractType
     {
         $builder
             ->add('name', EntityType::class, [
-                'class' => Company::class
+                'class' => Company::class,
+                'attr' => [
+                    'class' => 'form-control mb-2'
+                ]
             ])
             // ->add('domain')
             // ->add('sharePrice')
-            ->add('quantity')
+            ->add('quantity', TextType::class, [
+                'attr' => [
+                'class' => 'form-control mb-2'
+                ]])
             ->add('envoyer', Types\SubmitType::class, [
                 'attr' => [
-                    'class' => 'form-control mt-4',
+                    'class' => 'btn btn-primary mt-4',
                 ]]);
         ;
     }

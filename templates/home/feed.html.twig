@@ -18,6 +18,13 @@
       <li class="nav-item active">
         <a class="nav-link text-primary" href="{{ path('app_virement') }}">Faire un virement <span class="sr-only">(current)</span></a>
       </li>
+      <li class="nav-item active">
+        <a class="nav-link text-primary" href="{{ path('action') }}">Place boursière <span class="sr-only">(current)</span></a>
+      </li>
+       </li>
+         <li class="nav-item active">
+        <a class="nav-link text-primary" href="{{ path('vente') }}">Voir mes actions</a>
+      </li>
       <li class="nav-item">
                  {% if not hasSavingsAccount %}
                     <a href="{{ path('create_savings_account') }}" class="nav-link text-primary">Créer Compte Epargne Action</a>
@@ -97,9 +104,10 @@
               <div class="media-body">
                 <h4>{{ transactions.type }}</h4>
                 <span>{{ transactions.description }}</span>
-                <span>{{ transactions.date|date("m/d/Y") }}</span>
+                <span>{{ transactions.date|date("d/m/Y") }}</span>
               </div>
               <div class="align-self-center">
+                <span class='mr-4'>Compte Courant</span>
                 <i class="icon-wallet success font-large-2"></i>
               </div>
             </div>
@@ -125,9 +133,10 @@
               <div class="media-body">
                 <h4>{{ transactions2.type }}</h4>
                 <span>{{ transactions2.description }}</span>
-                <span>{{ transactions2.date|date("m/d/Y") }}</span>
+                <span>{{ transactions2.date|date("d/m/Y") }}</span>
               </div>
               <div class="align-self-center">
+                <span class='mr-4'>Compte Epargne Action</span>
                 <i class="icon-wallet success font-large-2"></i>
               </div>
             </div>

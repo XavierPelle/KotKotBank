@@ -23,9 +23,10 @@ class AccountCrudController extends AbstractCrudController
     public function configureFields(string $pageName): iterable
     {
         return [
-            IdField::new('id'),
-            MoneyField::new('balance')->setCurrency('EUR'),
-            MoneyField::new('overdraft')->setCurrency('EUR'),
+
+            MoneyField::new('total')->setCustomOption('storedAsCents', false)->setCurrency('EUR'),
+            MoneyField::new('balance')->setCustomOption('storedAsCents', false)->setCurrency('EUR'),
+            MoneyField::new('overdraft')->setCustomOption('storedAsCents', false)->setCurrency('EUR'),
             TextField::new('type'),
             DateTimeField::new('date'),
 

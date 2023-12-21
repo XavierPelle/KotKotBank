@@ -25,7 +25,7 @@ class TransactionCrudController extends AbstractCrudController
         return [
             IdField::new('id'),
             TextField::new('type'),
-            MoneyField::new('amount')->setCurrency('EUR'),
+            MoneyField::new('amount')->setCustomOption('storedAsCents', false)->setCurrency('EUR'),
             DateTimeField::new('date'),
             TextField::new('description'),
         ];

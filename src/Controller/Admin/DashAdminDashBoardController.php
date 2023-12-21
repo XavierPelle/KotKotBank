@@ -5,6 +5,11 @@ namespace App\Controller\Admin;
 use App\Entity\Client;
 use App\Entity\Account;
 use App\Entity\Transaction;
+use App\Entity\Company;
+use App\Entity\Events;
+use App\Entity\Portfolio;
+use App\Entity\ShareTransaction;
+
 use EasyCorp\Bundle\EasyAdminBundle\Router\AdminUrlGenerator;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Dashboard;
 use EasyCorp\Bundle\EasyAdminBundle\Config\MenuItem;
@@ -49,9 +54,23 @@ class DashAdminDashBoardController extends AbstractDashboardController
 
     public function configureMenuItems(): iterable
     {
-        yield MenuItem::linkToDashboard('Dashboard', 'fa fa-home');
-        yield MenuItem::linkToCrud('Client', 'fas fa-list', Client::class);
-        yield MenuItem::linkToCrud('Account', 'fas fa-list', Account::class);
-        yield MenuItem::linkToCrud('Transaction', 'fas fa-list', Transaction::class);
+        yield MenuItem::linkToDashboard('Dashboard', 'fa fa-box-archive');
+        yield MenuItem::linktoRoute("Page d'accueil", 'fas fa-home', 'app_feed');
+        yield MenuItem::linktoRoute("Page Bourse", 'fas fa-dollar-sign', 'action');
+
+        
+        yield MenuItem::subMenu('Portefeuille-Client', 'fas fa-list')->setSubItems([
+            MenuItem::linkToCrud('Client', 'fas fa-users', Client::class),
+            MenuItem::linkToCrud('Account', 'fas fa-wallet', Account::class),
+            MenuItem::linkToCrud('Transaction', 'fas fa-eye', Transaction::class),
+        ]);
+        
+        
+        yield MenuItem::subMenu('BookMark', 'fas fa-list')->setSubItems([
+            MenuItem::linkToCrud('Compagny', 'fas fa-eye', Company::class),
+            MenuItem::linkToCrud('Portefolio', 'fas fa-wallet', Portfolio::class),
+            MenuItem::linkToCrud('Share Transaction', 'fas fa-eye', ShareTransaction::class),
+            MenuItem::linkToCrud('Events', 'fas fa-bell', Events::class),
+        ]);
     }
 }

@@ -1,0 +1,120 @@
+ <head>
+    <link href="https://cdn.jsdelivr.net/npm/bootswatch@5.3.2/dist/minty/bootstrap.min.css" rel="stylesheet">
+</head>
+      <style>
+        .custom-table {
+             margin-left: auto;
+            margin-right: auto;
+            width: 80%;
+            border-collapse: collapse;
+        }
+
+        .custom-table thead {
+            background-color: #f2f2f2;
+        }
+
+        .custom-table th,
+        .custom-table td {
+            padding: 10px;
+            border: 1px solid #ddd;
+            text-align: left;
+        }
+
+        .custom-table th {
+            height: 50px;
+        }
+        .custom-table .up {
+            background-color: #0A9E3D;
+            color: white;
+        }
+
+        .custom-table .down {
+            background-color: #cc1919;
+            color: white;
+        }
+    </style>
+    <header>
+<nav class="navbar navbar-expand-lg navbar-light mb-4">
+  <a class="navbar-brand" href="{{ path('app_feed') }}">KoKoTBank.</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item active">
+        <a class="nav-link text-primary" href="{{ path('app_virement') }}">Faire un virement</a>
+      </li>
+         <li class="nav-item active">
+        <a class="nav-link text-primary" href="{{ path('vente') }}">Voir mes actions</a>
+      </li>
+        <li class="nav-item active">
+        <a class="nav-link text-primary" href="{{ path('action') }}">Place boursière</a>
+        </li>
+    </ul>
+  </div>
+  <a href="{{path('logout')}}" >Déconnection</a>
+</nav>
+</header>
+ <div class="container mt-5 px-2">
+        <div class="table-responsive">
+            <table class="custom-table">
+    <thead>
+        <tr>
+            <th scope="col">id</th>
+            <th scope="col">Nom</th>
+            <th scope="col">Prix d'achat</th>
+            <th scope="col">Prix actuelle de l'action</th>
+            <th scope="col">Quantity</th>
+        </tr>
+    </thead>
+    <tbody id='tr'>
+
+    </tbody>
+</table>
+        </div>
+    </div>
+        <script>
+
+            const id = window.location.pathname.split('/').pop();
+            let colorSharePrices = {};
+
+        function fetchCompanies() {
+            fetch(`/api/company/details/${id}`)
+                .then(response => response.json())
+                .then(data => {
+                    let tr = document.getElementById('tr');
+                    let tab = '';
+ 
+                    data.forEach(company => {
+                        const previousPrice = colorSharePrices[company.id];
+                        const priceClass = determinePriceClass(previousPrice, company.sharePrice);
+        
+                        tab += `<tr class="${priceClass}">
+                            <td>${company.id}</td>
+                            <td>${company.name}</td>
+                            <td>${company.domain}</td>
+                            <td>${company.sharePrice}</td>
+                            <td>${company.shareQuantity}</td>
+                        </tr>`;
+ 
+                        colorSharePrices[company.id] = company.sharePrice;
+                    });
+ 
+                    tr.innerHTML = tab;
+                })
+                .catch(error => console.error('Erreur lors de la récupération', error));
+        }
+ 
+        function determinePriceClass(previousPrice, currentPrice) {
+            if (previousPrice === undefined || currentPrice > previousPrice) {
+                return 'up';
+            } else if (currentPrice < previousPrice) {
+                return 'down';
+            } else {
+                return '';
+            }
+        }
+ 
+        fetchCompanies();
+        setInterval(fetchCompanies, 10000);
+    </script>
