@@ -7,10 +7,10 @@ Après l'inscription vous pourrez directement vous créer un compte courant et u
 
 ## Pré-requis
 
- Docker
- php
- symfony
- mysql
+1. Docker
+2. php
+3. symfony
+4. mysql
 
 ## Installation
 
@@ -22,18 +22,18 @@ utiliser la commande ```composer update``` pour mettre à jour les bundles. Lanc
 
 ## Fabriqué avec
 
-Docker
-Bootstrap
-symfony
+1. Docker
+2. Bootstrap
+3. symfony
 
 ## Versions
-Docker 3.8
-mysql 8
-php 8.2
-symfony 5.7
+1. Docker 3.8
+2. mysql 8
+3. php 8.2
+4. symfony 5.7
 
 ## Auteurs
-Xavier Pelle /XavierPelle
-Mathilde Ageron /Mathildeagr
-Sofian Margoum /sofmgm
-Dany Dauberton /Danydany140294
+1. Xavier Pelle /XavierPelle
+2. Mathilde Ageron /Mathildeagr
+3. Sofian Margoum /sofmgm
+4. Dany Dauberton /Danydany140294
