@@ -8,9 +8,9 @@ Après l'inscription vous pourrez directement vous créer un compte courant et u
 ## Pré-requis
 
 * Docker
-* php
-* symfony
-* mysql
+* Php
+* Symfony
+* Mysql
 
 ## Installation
 
@@ -24,13 +24,13 @@ utiliser la commande ```composer update``` pour mettre à jour les bundles. Lanc
 
 * Docker
 * Bootstrap
-* symfony
+* Symfony
 
 ## Versions
 * Docker 3.8
-* mysql 8
-* php 8.2
-* symfony 5.7
+* Mysql 8
+* Php 8.2
+* Symfony 5.7
 
 ## Auteurs
 * Xavier Pelle /XavierPelle
