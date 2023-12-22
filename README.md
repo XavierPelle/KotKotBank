@@ -1,4 +1,4 @@
-#titre KotKotBank
+#KotKotBank
 
 Projet de simulation bancaire et de place boursière.
 
