@@ -425,7 +425,6 @@ class ShareController extends AbstractController
 
 
             if($clientPortfolio->getQuantity() > $data['quantity']){
-                $this->addFlash('error', 'If portfolioQuantity > quantity');
                 $clientPortfolio->setQuantity($clientPortfolio->getQuantity() - $data['quantity']);
                 $clientPortfolio->setPrice($clientPortfolio->getPrice());
                 $clientPortfolio->setTotalPrice($clientPortfolio->getTotalPrice() - $totalPrice);
@@ -433,7 +432,6 @@ class ShareController extends AbstractController
                 
             }
             elseif ($clientPortfolio->getQuantity() == $data['quantity']){
-                $this->addFlash('error', 'If portfolioQuantity = quantity');
                 $miseZero = $clientPortfolio->setQuantity($clientPortfolio->getQuantity() - $data['quantity']);
                 $entityManager->remove($miseZero);
                 // $entityManager->flush();
