@@ -1,7 +1,4 @@
-KotKotBank
-(juste en dessous des badges sympatiques à placer)
-
-forthebadge forthebadge
+#titreKotKotBank
 
 Projet de simulation bancaire et de place boursière.
 
