@@ -7,7 +7,7 @@ Après l'inscription vous pourrez directement vous créer un compte courant et u
 
 ## Pré-requis
 
-. Docker
+* Docker
 2. php
 3. symfony
 4. mysql
