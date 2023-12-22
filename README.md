@@ -15,7 +15,7 @@ Pré-requis
 Installation
 
  Créer un fichier docker-compose.yml à la racine du dossier de travail. Il doit comprendre un container nginx, php, mysql, phpmyAdmin.
-Il faudra un dockerfile pour la configuration du serveur php. Utiliser la commande docker-compose up -d. Cloner le répo.
+Il faudra un dockerfile pour la configuration du serveur php. Utiliser la commande ```docker-compose up``` -d. Cloner le répo.
 
 Démarrage
 utiliser la commande composer update pour mettre à jour les bundles. Lancer le script qui fait tourner la boucle de la place boursière avec la commande php bin/console boucle.
